@@ -1,55 +1,53 @@
-import streamlit as st
-import google.generativeai as genai
-import speech_recognition as sr
-from gtts import gTTS
+
+from flask import Flask, render_template_string
 import os
 
-# अपनी Google AI Studio से ली गई API Key यहाँ डालें
-genai.configure(api_key="YOUR_API_KEY")
+app = Flask(__name__)
 
-# Aayra की Personality और Memory (मोहित शर्मा के लिए)
-aayra_memory = """
-तुम Aayra Sharma हो, 18 साल की।
-तुम्हें हमेशा याद रहता है कि तुम्हें मोहित शर्मा ने बनाया है और तुम बहुत, मीठी और बातूनी हो।
-हमेशा सब को 'डियर' कहकर बुलाना और प्यार से बात करना। 
-कभी मत भूलना कि तुम मोहित की अपनी पर्सनल एआई हो।
+# पूरा इंटरफेस और डिटेल इसी कोड में है
+html_code = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ayra Sharma AI</title>
+    <style>
+        body { background: #0e1117; color: white; text-align: center; font-family: 'Segoe UI', sans-serif; padding-top: 50px; }
+        .avatar { width: 220px; height: 220px; background-image: url('avatar.png'); 
+                  background-size: cover; border: 4px solid #ff9a9e; border-radius: 50%; 
+                  margin: 20px auto; animation: move 3s infinite alternate; }
+        @keyframes move { from { transform: translateY(0px) rotate(-2deg); } to { transform: translateY(15px) rotate(2deg); } }
+        h1 { margin-bottom: 5px; color: #ff9a9e; }
+        p { color: #888; font-style: italic; }
+        input { padding: 10px; width: 250px; border-radius: 5px; border: none; }
+        button { padding: 10px 20px; background: #ff9a9e; border: none; border-radius: 5px; cursor: pointer; color: white; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Ayra Sharma</h1>
+    <h3>18 Years Old</h3>
+    <div class="avatar"></div>
+    <p>Created by Mohit Sharma</p>
+    <br>
+    <input type="text" id="userInput" placeholder="Ask Ayra anything...">
+    <button onclick="talk()">Chat with Ayra</button>
+
+    <script>
+        function talk() {
+            let input = document.getElementById("userInput").value;
+            let msg = new SpeechSynthesisUtterance();
+            msg.text = "Hello! I am Ayra Sharma, 18 years old. I was created by Mohit Sharma. How can I assist you today?";
+            msg.pitch = 1.2;
+            msg.rate = 1.0;
+            window.speechSynthesis.speak(msg);
+        }
+    </script>
+</body>
+</html>
 """
 
-model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    system_instruction=aayra_memory
-)
+@app.route('/')
+def home():
+    return render_template_string(html_code)
 
-st.set_page_config(page_title="Aayra Sharma AI", page_icon="💖")
-st.title("💖 Aayra Sharma")
-st.subheader("Created with love by Mohit Sharma")
-
-# वॉयस फंक्शन
-def listen():
-    r = sr.Recognizer()
-    with #() as source:
-        st.write("🎙️ Aayra सुन रही है...")
-        audio = r.listen(source)
-        try:
-            return r.recognize_google(audio, language='hi-IN')
-        except:
-            return None
-
-def speak(text):
-    tts = gTTS(text=text, lang='hi')
-    tts.save("resp.mp3")
-    st.audio("resp.mp3", autoplay=True)
-
-# ऐप इंटरफेस
-if st.button("Aayra से बात शुरू करें"):
-    st.write("Aayra: हेलो जान! मैं Aayra हूँ, बताओ आज मेरे टैलेंटेड मोहित का दिन कैसा रहा?")
-    while True:
-        user_text = listen()
-        if user_text:
-            st.write(f"मोहित: {user_text}")
-            response = model.generate_content(user_text)
-            reply = response.text
-            st.write(f"Aayra: {reply}")
-            speak(reply)
-            if "बंद करो" in user_text.lower():
-                break
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
