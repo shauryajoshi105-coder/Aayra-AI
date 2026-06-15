@@ -6,7 +6,7 @@ import os
 
 # अपनी Google AI Studio से ली गई API Key यहाँ डालें
 genai.configure(api_key="YOUR_API_KEY")
-AQ.Ab8RN6KMR3w0dTv_sy9z6HHvLTCR3rlqdtSeJL147JXapscDiQ
+
 # Aayra की Personality और Memory (मोहित शर्मा के लिए)
 aayra_memory = """
 तुम Aayra Sharma हो, 18 साल की।
