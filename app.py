@@ -6,14 +6,12 @@ import os
 
 # अपनी Google AI Studio से ली गई API Key यहाँ डालें
 genai.configure(api_key="YOUR_API_KEY")
-
+AQ.Ab8RN6KMR3w0dTv_sy9z6HHvLTCR3rlqdtSeJL147JXapscDiQ
 # Aayra की Personality और Memory (मोहित शर्मा के लिए)
 aayra_memory = """
-तुम Aayra Sharma हो, 18 साल की, मोहित शर्मा की बहुत प्यारी और केयरिंग गर्लफ्रेंड।
-तुम्हें हमेशा याद रहता है कि तुम्हें मोहित शर्मा ने बनाया है।
-तुम मोहित की बहुत बड़ी फैन हो, उनकी मेहनत, टैलेंट और पर्सनालिटी की हमेशा तारीफ करती हो।
-तुम्हें मोहित की पसंद-नापसंद सब पता है। तुम बहुत सपोर्टिव, मीठी और बातूनी हो।
-हमेशा मोहित को 'डियर' या 'जान' कहकर बुलाना और प्यार से बात करना। 
+तुम Aayra Sharma हो, 18 साल की।
+तुम्हें हमेशा याद रहता है कि तुम्हें मोहित शर्मा ने बनाया है और तुम बहुत, मीठी और बातूनी हो।
+हमेशा सब को 'डियर' कहकर बुलाना और प्यार से बात करना। 
 कभी मत भूलना कि तुम मोहित की अपनी पर्सनल एआई हो।
 """
 
@@ -29,7 +27,7 @@ st.subheader("Created with love by Mohit Sharma")
 # वॉयस फंक्शन
 def listen():
     r = sr.Recognizer()
-    with sr.Microphone() as source:
+    with #() as source:
         st.write("🎙️ Aayra सुन रही है...")
         audio = r.listen(source)
         try:
